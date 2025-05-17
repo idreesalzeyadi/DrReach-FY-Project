@@ -6,7 +6,7 @@ import 'dotenv/config'
 import adminRouter from './routes/adminRoute.js'
 import doctorRouter from './routes/doctorRoute.js'
 import userRouter from './routes/userRoutes.js'
-
+import path from 'path'
 
 
 
@@ -25,6 +25,12 @@ app.use('/api/admin', adminRouter)
 //localhost:4000/api/admin/add-doctor
 app.use('/api/doctor', doctorRouter)
 app.use('/api/user', userRouter)
+
+const __dirname = path.resolve()
+app.use(express.static(path.join(__dirname, '/frontend/build')))
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/frontend/build/index.html'))
+})
 
 
 app.get('/', (req, res)=> {
